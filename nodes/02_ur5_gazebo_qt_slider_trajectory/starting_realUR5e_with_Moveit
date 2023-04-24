@@ -1,0 +1,11 @@
+SS23, 24.4.23 von OJ
+
+$1 roscore      => ip 192.168.0.77   im UR5e konfiguriert
+
+$2 roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=192.168.0.3 kinematics_config:=$(rospack find ur_calibration)/etc/ur5e_robot_calibration.yaml
+starte ExternalContrrol auf dem UR5e
+  ==> Robot connected to reverse interface. Ready to receive control commands.
+
+$3 roslaunch ur5e_moveit_config ur5e_moveit_planning_execution.launch limited:=true    !!!! !Wichtig, die UR5e Version !!!
+
+$4 roslaunch ur5e_moveit_config moveit_rviz.launch rviz_config:=$(rospack find ur5e_moveit_config)/launch/moveit.rviz  !!!!Wichtig, die UR5e Version !!!
