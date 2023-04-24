@@ -109,7 +109,7 @@ class UIClass(QWidget):
 
         # Fenster Konfigurieren
         self.setGeometry(300, 300, 500, 150)
-        self.setWindowTitle('EMR22 - UR5 - Gazebo Steering')
+        self.setWindowTitle('EMR22 - UR5 - Gazebo Steering - MoveIt!')
         self.show()
 
         # Signal und Slot verbinden
