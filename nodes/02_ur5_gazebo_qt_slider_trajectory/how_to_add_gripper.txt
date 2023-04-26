@@ -1,0 +1,19 @@
+Gripper in Gazebo/MoveIt an den URx anbauen:
+OJ 26.4.23
+
+Kopiere bzw. ersetze diese Dateien in den/im Ordner
+
+realBot: ~/ws_moveit/src/fmauch_universal_robot/ur_description/urdf
+
+gazeboBot: ~/ws_moveit/src/universal_robot/ur_description/urdf
+
+
+[Error] Unable to identify any set of controllers that can actuate the specified joints: [ elbow_joint shoulder_lift_joint shoulder_pan_joint wrist_1_joint wrist_2_joint wrist_3_joint ]
+[ERROR] [1682497718.777331140, 2312.929000000]: Known controllers and their joints:
+controller 'gripper_controller' controls joints:
+  robotiq_85_left_knuckle_joint
+
+
+Lösung: ??
+
+Button 2c => roslaunch ur5_gripper_moveit_config demo_gazebo_pick_and_place.launch
