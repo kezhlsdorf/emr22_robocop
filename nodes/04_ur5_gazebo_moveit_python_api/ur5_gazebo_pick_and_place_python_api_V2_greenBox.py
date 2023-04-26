@@ -13,7 +13,7 @@
 # -----------------------------------------
 # usage
 #   $1 roslaunch ur5_gripper_moveit_config demo_gazebo_pick_and_place_collision.launch
-# 
+#
 #   $2 rosrun THIS FILE
 # ----------------------------------------------------------------
 import sys
@@ -28,6 +28,7 @@ import numpy as np  # für deg2rad
 
 def wait_for_state_update(box_name, scene, box_is_known=False,
                           box_is_attached=False, timeout=4):
+    # Wartefunktion
     start = rospy.get_time()
     seconds = rospy.get_time()
     while (seconds - start < timeout) and not rospy.is_shutdown():

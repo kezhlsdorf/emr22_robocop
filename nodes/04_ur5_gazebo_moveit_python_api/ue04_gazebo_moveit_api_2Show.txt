@@ -22,9 +22,11 @@ OJ 26.04.23
 
 2.) Starte MoveIt mit Gripper, zeige API-Version Python
 
+Skript Kapitel 9
+https://moveit.ros.org/documentation/concepts/
 https://ros-planning.github.io/moveit_tutorials/doc/move_group_python_interface/move_group_python_interface_tutorial.html
 
-
+3.) Zeige Class in Datei move_group_python_interface_tutorial.py
 
 Lösung:
 
