@@ -126,6 +126,15 @@ class MoveGroupPythonInterfaceTutorial(object):
         group_name = "ur5_arm"
         move_group = moveit_commander.MoveGroupCommander(group_name)
 
+        # Klinker, Echtzeitsteuerung
+        # Konfiguratuion Planungsalgorithmus
+        # => ompl_planning.yaml
+        move_group.set_planner_id("EMR")
+        move_group.allow_replanning(True)
+        move_group.set_goal_tolerance(0.005)
+        move_group.set_num_planning_attempts(3)
+        move_group.set_planning_time(1)
+
         # Create a `DisplayTrajectory`_ ROS publisher which is used to display
         # trajectories in Rviz:
         display_trajectory_publisher = rospy.Publisher(

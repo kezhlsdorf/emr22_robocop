@@ -6,13 +6,15 @@
 # -------------------------------------
 # Pick and Place
 # in Python mit der move_group_api
-# und Kollsionsverhütung
+# und Kollsionsverhütung => Andere Gazebo Welt 
+# "pick_and_place_collision"
 # -----------------------------------------
 # basiert auf dem Code
 # https://roboticscasual.com/ros-tutorial-pick-and-place-task-with-the-moveit-c-interface/
 # -----------------------------------------
 # usage
-#   $1 roslaunch ur5_gripper_moveit_config demo_gazebo_pick_and_place_collision.launch
+#   $1 roslaunch ur5_gripper_moveit_config
+#      demo_gazebo_pick_and_place_collision.launch
 #
 #   $2 rosrun THIS FILE
 # ----------------------------------------------------------------
@@ -56,6 +58,15 @@ group = moveit_commander.MoveGroupCommander(group_name)
 group_name_gripper = "gripper"
 group_gripper = moveit_commander.MoveGroupCommander(group_name_gripper)
 
+# Klinker, Echtzeitsteuerung
+# Konfiguratuion Planungsalgorith
+# => ompl_planning.yaml
+group.set_planner_id("EMR")
+group.allow_replanning(True)
+group.set_goal_tolerance(0.005)
+group.set_num_planning_attempts(3)
+group.set_planning_time(1)
+
 # Create a Publisher.
 display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
                                                moveit_msgs.msg.DisplayTrajectory,
@@ -85,7 +96,7 @@ print("=== Adding Desktop-Plate to Planning Scene  ===")
 scene = moveit_commander.PlanningSceneInterface()
 rospy.sleep(2.0)
 box_pose = geometry_msgs.msg.PoseStamped()
-box_pose.header.frame_id = robot.get_planning_frame() 
+box_pose.header.frame_id = robot.get_planning_frame()
 box_pose.pose.orientation.w = 1.0
 box_pose.pose.position.z = -0.2
 box_name = "desktop"
@@ -103,7 +114,7 @@ green_box_pose.pose.position.z = -0.05  # siehe Gazebo unit_box_2
 green_box_pose.pose.position.x = 0.0
 green_box_pose.pose.position.y = 0.5
 green_box_name = "green box"
-scene.add_box(green_box_name, green_box_pose, size=(0.2, 0.34, 0.45))
+scene.add_box(green_box_name, green_box_pose, size=(0.2, 0.34, 0.45 + 0.1))
 rospy.loginfo(wait_for_state_update(box_name, scene, box_is_known=True))
 
 # ---- 1. Move to home position ----
@@ -178,7 +189,7 @@ group.execute(plan, wait=True)
 input("\n Close Gripper => Enter")
 joint_gripper = group_gripper.get_current_joint_values()
 print("Gripper Angle is", joint_gripper)
-joint_gripper[0] = pi/11  # complete open is 0.0007  closed is pi/4
+joint_gripper[0] = pi/13  # complete open is 0.0007  closed is pi/4
 group_gripper.go(joint_gripper, wait=True)
 group_gripper.stop()
 

@@ -32,7 +32,7 @@ class MainWindow(QWidget):
 
         # --- roslaunch ---
         self.myPb_gazebo_ur5 = QPushButton(self)
-        self.myPb_gazebo_ur5.setText('2c- UR5+Gripper Gz MoveIt!')
+        self.myPb_gazebo_ur5.setText('2c-UR5+Gripr Pick&Place MvIt!')
         self.myPb_gazebo_ur5.setGeometry(430, 50, 200, 40)  # x,y,w,h
         self.myPb_gazebo_ur5.clicked.connect(self.slot_ur5_grip_moveit)
 
@@ -44,9 +44,9 @@ class MainWindow(QWidget):
 
         # --- Pick and Place Script ---
         self.myPb_pick_place = QPushButton(self)
-        self.myPb_pick_place.setText('3c- Py API - Gripper')
+        self.myPb_pick_place.setText('3c- Gz Pick&Place Collisison')
         self.myPb_pick_place.setGeometry(430, 90, 200, 40)  # x,y,w,h
-        self.myPb_pick_place.clicked.connect(self.slot_pick_place_gripper)
+        self.myPb_pick_place.clicked.connect(self.slot_pick_place_collision)
 
         """ self.myPb_depth = QPushButton(self)
         self.myPb_depth.setText('Starte UR5, Gazebo, Moveit mit Depth-Cam')
@@ -93,8 +93,8 @@ class MainWindow(QWidget):
     def slot_pick_place(self):
         os.system('gnome-terminal -- bash -c "rosrun emr22 move_group_api_test.py; exec bash"')
     
-    def slot_pick_place_gripper(self):
-        os.system('gnome-terminal -- bash -c "rosrun emr22 move_group_api_test_gripper.py; exec bash"')
+    def slot_pick_place_collision(self):
+        os.system('gnome-terminal -- bash -c "roslaunch ur5_gripper_moveit_config demo_gazebo_pick_and_place_collision.launch; exec bash"')
 
     """def slot_ur5_depth(self):
         os.system('gnome-terminal -- bash -c "roslaunch ur5_gripper_moveit_config demo_gazebo_pick_and_place_depth.launch; exec bash"')
