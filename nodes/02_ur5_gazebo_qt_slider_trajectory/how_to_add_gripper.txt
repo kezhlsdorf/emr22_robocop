@@ -14,9 +14,7 @@ controller 'gripper_controller' controls joints:
   robotiq_85_left_knuckle_joint
 
 
-Lösung: ??
-
-Button 2c => roslaunch ur5_gripper_moveit_config demo_gazebo_pick_and_place.launch
+Lösung:
 
 ros_controllers.yaml
 
