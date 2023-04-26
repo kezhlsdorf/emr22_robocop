@@ -17,3 +17,14 @@ controller 'gripper_controller' controls joints:
 Lösung: ??
 
 Button 2c => roslaunch ur5_gripper_moveit_config demo_gazebo_pick_and_place.launch
+
+ros_controllers.yaml
+
+change Line 43 ff
+ur5_arm_controller:
+  type: effort_controllers/JointTrajectoryController
+  # was type: effort_controllers/JointTrajectoryController  
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - shoulder_pan_joint
+    - shoulder_lift_joint
