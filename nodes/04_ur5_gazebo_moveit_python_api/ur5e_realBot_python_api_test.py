@@ -83,7 +83,7 @@ print("=== Adding Desktop-Plate to Planning Scene  ===")
 scene = moveit_commander.PlanningSceneInterface()
 rospy.sleep(2.0)
 box_pose = geometry_msgs.msg.PoseStamped()
-box_pose.header.frame_id = robot.get_planning_frame() 
+box_pose.header.frame_id = robot.get_planning_frame()
 box_pose.pose.orientation.w = 1.0
 box_pose.pose.position.z = -0.2
 box_name = "desktop"

@@ -76,7 +76,7 @@ print("= Robot Groups:", robot.get_group_names())
 # Sometimes for debugging it is useful to print the entire state of the
 # robot:
 print("= Printing robot state")
-# print(robot.get_current_state())
+print(robot.get_current_state())
 print("")
 
 # Create an Collision object for PlanningSceneInterface.
