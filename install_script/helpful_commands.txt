@@ -24,3 +24,9 @@ P1  turtlesim
 Suchen nach Begriif in ganzen Verzeichnis
 grep -r "Begriff" 
 
+
+
+Alles über die gazebo Objekte in eine Textdatei shreiben
+rostopic echo /gazebo/link_states > gazebo_link_states.txt
+
+
