@@ -55,9 +55,10 @@ group_name_gripper = "gripper"
 group_gripper = moveit_commander.MoveGroupCommander(group_name_gripper)
 
 # Create a Publisher.
-display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
-                                               moveit_msgs.msg.DisplayTrajectory,
-                                               queue_size=20)
+display_trajectory_publisher = rospy.Publisher(
+    '/move_group/display_planned_path',
+    moveit_msgs.msg.DisplayTrajectory,
+    queue_size=20)
 
 # ##### Getting Basic Information ###############
 # We can get the name of the reference frame for this robot:
