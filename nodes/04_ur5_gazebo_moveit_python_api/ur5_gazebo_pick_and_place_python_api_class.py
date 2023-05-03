@@ -518,9 +518,10 @@ def main():
 
         # Instanzierung der Klasse
         tutorial = MoveGroupPythonInterfaceTutorial()
+
+        # http://docs.ros.org/en/kinetic/api/moveit_commander/html/classmoveit__commander_1_1move__group_1_1MoveGroupCommander.html
         print("Available Targets for Group States")
-        
-        print(tutorial.get_named_target_values("ur5_arm"))
+        print(tutorial.move_group.get_named_target_values("ur5_arm"))
 
         input("=> Press `Enter` to move to a joint state goal above Blue Box")
         tutorial.go_to_joint_state()
