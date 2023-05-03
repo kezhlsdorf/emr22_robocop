@@ -503,6 +503,9 @@ class MoveGroupPythonInterfaceTutorial(object):
         self.group_gripper.go(joint_gripper, wait=True)
         self.group_gripper.stop()
 
+    def get_named_target_values(self, target):
+        return self.move_group.get_named_target_values(target)
+
 
 def main():
     try:
@@ -513,7 +516,11 @@ def main():
         print("Press Ctrl-D to exit at any time")
         print("")
 
+        # Instanzierung der Klasse
         tutorial = MoveGroupPythonInterfaceTutorial()
+        print("Available Targets for Group States")
+        
+        print(tutorial.get_named_target_values("ur5_arm"))
 
         input("=> Press `Enter` to move to a joint state goal above Blue Box")
         tutorial.go_to_joint_state()
