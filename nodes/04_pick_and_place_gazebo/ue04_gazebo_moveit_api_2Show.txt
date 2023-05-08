@@ -20,14 +20,6 @@ OJ 26.04.23
     controller 'gripper_controller' controls joints:
     robotiq_85_left_knuckle_joint
 
-2.) Starte MoveIt mit Gripper, zeige API-Version Python
-
-Skript Kapitel 9
-https://moveit.ros.org/documentation/concepts/
-https://ros-planning.github.io/moveit_tutorials/doc/move_group_python_interface/move_group_python_interface_tutorial.html
-
-3.) Zeige Class in Datei move_group_python_interface_tutorial.py
-
 Lösung:
 
 ros_controllers.yaml
@@ -40,3 +32,12 @@ ur5_arm_controller:
   joints:
     - shoulder_pan_joint
     - shoulder_lift_joint
+
+2.) Starte MoveIt mit Gripper, zeige API-Version Python
+
+Skript Kapitel 9
+https://moveit.ros.org/documentation/concepts/
+https://ros-planning.github.io/moveit_tutorials/doc/move_group_python_interface/move_group_python_interface_tutorial.html
+
+3.) Zeige Class in Datei move_group_python_interface_tutorial.py
+
