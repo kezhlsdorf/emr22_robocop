@@ -1,3 +1,6 @@
+Kamera in Gazebo einbrinngen
+
+
 In dieser LE installieren wir die Realsense Kamera
 Bilder mit openCV laden und bearbeiten
 Objekt finden wie bei DAIRAL  (Canny Algorithmus)
