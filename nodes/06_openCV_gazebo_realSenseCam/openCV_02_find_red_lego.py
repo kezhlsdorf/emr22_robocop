@@ -18,6 +18,7 @@
 #
 # $3 rosrun emr22 openCV_01_get_pic_from_realsense_via_ros.py 
 # -------------------------------------------------------
+# Idea from 
 # https://www.geeksforgeeks.org/multiple-color-detection-in-real-time-using-python-opencv/
 
 
@@ -108,7 +109,7 @@ class image_receiver:
 def main(args):
     ir = image_receiver() # Instanzierung der Klasse
     rospy.init_node('image_receiver', anonymous=True)
-    
+
     while (not rospy.is_shutdown()):
         try:
             # get img from callback
