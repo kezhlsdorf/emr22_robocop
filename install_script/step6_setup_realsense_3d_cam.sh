@@ -27,7 +27,7 @@ sudo apt-get install librealsense2-utils
 sudo apt-get install librealsense2-dev
 sudo apt-get install librealsense2-db
 
-sudo apt-get install ros-noetic-realsense2-camera
+sudo apt-get install ros-noetic-realsense2-camera -b ros1-legacy
 sudo apt-get install ros-noetic-object-recognition-msgs
 sudo apt-get install ros-noetic-libuvc-camera
 sudo apt-get install ros-noetic-octomap-msgs
