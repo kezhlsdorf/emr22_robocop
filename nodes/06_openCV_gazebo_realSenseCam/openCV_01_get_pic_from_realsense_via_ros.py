@@ -60,7 +60,7 @@ class image_receiver:
             print('received image of type: "%s"' % ros_data.format)
 
         #### direct conversion to CV2 ####
-        np_arr = np.fromstring(ros_data.data, np.uint8)
+        np_arr = np.frombuffer(ros_data.data, np.uint8)
         image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         
         cv2.imshow('cv_img', image_np)
