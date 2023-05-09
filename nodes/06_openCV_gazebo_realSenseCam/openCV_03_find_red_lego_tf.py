@@ -89,6 +89,7 @@ class image_receiver:
             area = cv2.contourArea(contour)
             if(area > 300):
                 x, y, w, h = cv2.boundingRect(contour)
+                print(x, y, w, h)
                
                 self.img2 = cv2.rectangle(self.img2, (x, y), 
                                         (x + w, y + h), 
