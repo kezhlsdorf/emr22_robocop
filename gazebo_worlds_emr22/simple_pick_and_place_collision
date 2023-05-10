@@ -192,6 +192,7 @@
       <model name='unit_box_blue'>
         <pose frame=''>0.3 0.5 1.04493 1e-06 2e-05 1e-06</pose>
         <scale>1 1 1</scale>
+        <static>0</static>  <!-- OJ for better grapsing -->
         <link name='link'>
           <pose frame=''>0.3 0.5 1.04493 1e-06 2e-05 1e-06</pose>
           <velocity>0 0 0 0 -0 0</velocity>
