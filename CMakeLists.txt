@@ -94,7 +94,8 @@ add_executable(turtle_sub  src/turtle_subscriber.cpp )
 add_executable(turtle_p1  src/p1_my_cpp_publisher_4turtlesim.cpp )
 add_executable(adaim_pick_place  src/adaim_pick_and_place.cpp )
 add_executable(adaim_pick_place_collision  src/adaim_pick_and_place_collision.cpp )
-add_executable(adaim_pick_place_depth  src/adaim_pick_and_place_collision_depth_camera.cpp )
+add_executable(adaim_pick_place_coll_depth_camera  src/adaim_pick_and_place_collision_depth_camera.cpp )
+add_executable(adaim_pick_place_coll_depth_cam_cartesian  src/adaim_pick_and_place_collision_depth_camera_cartesian.cpp )
 add_executable(hello_ros_param    src/hello_ros_param.cpp )
 
 
@@ -106,7 +107,8 @@ target_link_libraries(turtle_sub ${catkin_LIBRARIES} )
 target_link_libraries(turtle_p1 ${catkin_LIBRARIES} )
 target_link_libraries(adaim_pick_place ${catkin_LIBRARIES} )
 target_link_libraries(adaim_pick_place_collision ${catkin_LIBRARIES} )
-target_link_libraries(adaim_pick_place_depth ${catkin_LIBRARIES} )
+target_link_libraries(adaim_pick_place_coll_depth_camera ${catkin_LIBRARIES} )
+target_link_libraries(adaim_pick_place_coll_depth_cam_cartesian ${catkin_LIBRARIES} )
 target_link_libraries(hello_ros_param ${catkin_LIBRARIES} )
 # 
 #############
