@@ -61,6 +61,7 @@ import copy
 import rospy
 import moveit_commander
 import moveit_msgs.msg
+# import moveit_msgs.RobotTrajectory.msg
 import geometry_msgs.msg
 
 from math import dist, fabs, cos, pi  # tau = 2*pi
@@ -181,6 +182,7 @@ class MoveGroupPythonInterfaceTutorial(object):
         # self.planning_frame = planning_frame
         # self.eef_link = eef_link
         # self.group_names = group_names
+        
 
     def go_to_joint_state(self):
         # Planning to a Joint Goal
@@ -243,7 +245,7 @@ class MoveGroupPythonInterfaceTutorial(object):
         return all_close(pose_goal, current_pose, 0.01)
 
     def go_to_pose_goal2(self):
-        # Planning to a Pose Goal
+        # Go to a Pose Goal without collisision detection
         # use Pose Blue Box from URDF
         # <model name='unit_box_blue'>
         #   <pose frame=''>0.3 0.5 1.04493 1e-06 2e-05 1e-06</pose
@@ -253,9 +255,9 @@ class MoveGroupPythonInterfaceTutorial(object):
         # -2.530727415391778, -1.5184364492350666, 0.8726646259971648]
 
         pose_goal = geometry_msgs.msg.Pose()
-        pose_goal.position.x = 0.8203047484373349
-        pose_goal.position.y = -0.9599310885968813
-        pose_goal.position.z = 1.9024088846738192
+        pose_goal.position.x = 0.5  # red arrow
+        pose_goal.position.y = 0.5  # green
+        pose_goal.position.z = 0.5  # blue
         # Orientation in Form eine Quaternion
         # pose_goal.orientation.w = ?
         # pose_goal.orientation.x
@@ -451,6 +453,17 @@ class MoveGroupPythonInterfaceTutorial(object):
     def get_named_target_values(self, target):
         return self.move_group.get_named_target_values(target)
 
+    # def plan_execute_without_collision(self):  # not tested yet
+    #     group_variable_values = self.move_group.get_current_joint_values()
+    #     group_variable_values[0] = 0
+    #     self.move_group.set_joint_value_target(group_variable_values)
+    #     # plan = RobotTrajectory()
+    #     plan = self.move_group.plan()
+    #     self.move_group.execute(plan, wait=True)
+
+    #     # http://docs.ros.org/en/jade/api/moveit_commander/html/classmoveit__commander_1_1move__group_1_1MoveGroupCommander.html#ad7f6d93d73bf43268ba983afb0dc4f23
+    #     # https://answers.ros.org/question/377150/attributeerror-tuple-object-has-no-attribute-serialize-after-attempting-to-execute-a-plan/
+
 
 def main():
     try:
@@ -464,6 +477,9 @@ def main():
         # Instanzierung der Klasse
         tutorial = MoveGroupPythonInterfaceTutorial()
 
+        # tutorial.plan_execute_without_collision()
+        # exit()
+
         # http://docs.ros.org/en/kinetic/api/moveit_commander/html/classmoveit__commander_1_1move__group_1_1MoveGroupCommander.html
         print("Available Targets for Group States")
         # print(tutorial.move_group.get_named_target_values("ur5_arm"))
@@ -471,8 +487,8 @@ def main():
         input("=> Press `Enter` to move to a joint state goal above Blue Box")
         tutorial.go_to_joint_state()
 
-        input("=> Press `Enter` to move to a pose goal ...")
-        tutorial.go_to_pose_goal()
+        # input("=> Press `Enter` to move to a pose goal ...")
+        # tutorial.go_to_pose_goal()
 
         input("============ Press `Enter` to plan Cartesian path z = -5cm")
         cartesian_plan, fraction = tutorial.plan_cartesian_path()
