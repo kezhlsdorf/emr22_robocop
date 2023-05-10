@@ -11,7 +11,7 @@
  
 <launch>
     <arg name="depth" default="true"/>  <!-- needed for publshing tf-->
-    <arg name="gui" default="true"/> <!-- launch the GUI ?-->-->
+    <arg name="gui" default="true"/> <!-- launch the GUI ?-->
      <!-- Path to folder containing objects to detect. -->
      <arg name="objects_path" default="~/ws_moveit/src/emr22/find_object_pic"/> 
 
