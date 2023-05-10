@@ -6,6 +6,11 @@
 # move_group_python_interface/move_group_python_interface_tutorial.html
 # changed to ur5 by OJ 26.04.23
 
+# **********************************************
+# DICKES PROBLEM 10.05.2023 OJ
+# kein zweiter cartesian path möglich
+# **********************************************
+
 # Software License Agreement (BSD License)
 #
 # Copyright (c) 2013, SRI International
@@ -135,9 +140,9 @@ class MoveGroupPythonInterfaceTutorial(object):
         # => ompl_planning.yaml
         self.move_group.set_planner_id("EMR")
         self.move_group.allow_replanning(True)
-        self.move_group.set_goal_tolerance(0.01)
-        self.move_group.set_num_planning_attempts(5)
-        self.move_group.set_planning_time(2)
+        self.move_group.set_goal_tolerance(0.02)
+        self.move_group.set_num_planning_attempts(10)
+        self.move_group.set_planning_time(4)
 
         # Create a `DisplayTrajectory`_ ROS publisher which is used to display
         # trajectories in Rviz:
@@ -237,6 +242,42 @@ class MoveGroupPythonInterfaceTutorial(object):
         current_pose = self.move_group.get_current_pose().pose
         return all_close(pose_goal, current_pose, 0.01)
 
+    def go_to_pose_goal2(self):
+        # Planning to a Pose Goal
+        # use Pose Blue Box from URDF
+        # <model name='unit_box_blue'>
+        #   <pose frame=''>0.3 0.5 1.04493 1e-06 2e-05 1e-06</pose
+        # or use Info from Terminal from C++ Version
+        # Reached TCP Goal above blue box
+        # [0.8203047484373349, -0.9599310885968813, 1.9024088846738192,
+        # -2.530727415391778, -1.5184364492350666, 0.8726646259971648]
+
+        pose_goal = geometry_msgs.msg.Pose()
+        pose_goal.position.x = 0.8203047484373349
+        pose_goal.position.y = -0.9599310885968813
+        pose_goal.position.z = 1.9024088846738192
+        # Orientation in Form eine Quaternion
+        # pose_goal.orientation.w = ?
+        # pose_goal.orientation.x
+        # pose_goal.orientation.y
+        # pose_goal.orientation.z
+
+        self.move_group.set_pose_target(pose_goal)
+
+        # Now, we call the planner to compute the plan and execute it.
+        # `go()` returns a boolean indicating whether the planning
+        # and execution was successful.
+        success = self.move_group.go(wait=True)
+        print(success)
+        # Calling `stop()` ensures that there is no residual movement
+        self.move_group.stop()
+        # It is always good to clear your targets after planning with poses.
+        # Note: there is no equivalent function for clear_joint_value_targets()
+        self.move_group.clear_pose_targets()
+
+        current_pose = self.move_group.get_current_pose().pose
+        return all_close(pose_goal, current_pose, 0.01)
+
     def plan_cartesian_path(self, scale=1):
         waypoints = []
         wpose = self.move_group.get_current_pose().pose
@@ -252,7 +293,7 @@ class MoveGroupPythonInterfaceTutorial(object):
     def plan_cartesian_path2(self, scale=1):
         waypoints = []
         wpose = self.move_group.get_current_pose().pose
-        # Wegpunk 1
+        # Wegpunkt 1
         wpose.position.z += scale * 0.05  # First move up(z), Box ist 45cm hoch
         waypoints.append(copy.deepcopy(wpose))
 
@@ -269,11 +310,15 @@ class MoveGroupPythonInterfaceTutorial(object):
         wpose.position.z += scale * -0.48  # Third move down (y)
         waypoints.append(copy.deepcopy(wpose))
 
-        (plan, fraction) = self.move_group.compute_cartesian_path(
+        print("Wegpunkte Plan 2", waypoints)
+
+        # self.move_group.clear_cartesian_path() how?
+
+        (plan2, fraction2) = self.move_group.compute_cartesian_path(
             waypoints, 0.01, 0.0  # waypoints to follow  # eef_step
         )  # jump_threshold
 
-        return plan, fraction
+        return plan2, fraction2
 
     def display_trajectory(self, plan):
         # Displaying a Trajectory
@@ -286,8 +331,11 @@ class MoveGroupPythonInterfaceTutorial(object):
         # any AttachedCollisionObjects and add our plan to the trajectory.
 
         display_trajectory = moveit_msgs.msg.DisplayTrajectory()
+        display_trajectory.trajectory.clear()
         display_trajectory.trajectory_start = self.robot.get_current_state()
         display_trajectory.trajectory.append(plan)
+        
+        
         # Publish
         self.display_trajectory_publisher.publish(display_trajectory)
 
@@ -356,8 +404,17 @@ class MoveGroupPythonInterfaceTutorial(object):
 
     def attach_blue_box(self, timeout=4):
         # Attaching Objects to the Robot
-        grasping_group = "gripper"
-        touch_links = self.robot.get_link_names(group=grasping_group)
+        # grasping_group = "gripper"
+        touch_links = ['robotiq_85_left_knuckle_link',
+                       'robotiq_85_left_inner_knuckle_link',
+                       'robotiq_85_left_finger_link',
+                       'robotiq_85_left_finger_tip_link',
+                       'robotiq_85_right_knuckle_link',
+                       'robotiq_85_right_inner_knuckle_link',
+                       'robotiq_85_right_finger_tip_link',
+                       'robotiq_85_right_finger_link']
+        # was touch_links = self.robot.get_link_names(group=grasping_group)
+        print("touch links", touch_links)
         self.scene.attach_box(self.eef_link,
                               self.box_name,
                               touch_links=touch_links)
@@ -414,8 +471,8 @@ def main():
         input("=> Press `Enter` to move to a joint state goal above Blue Box")
         tutorial.go_to_joint_state()
 
-        # input("=> Press `Enter` to move to a pose goal ...")
-        # tutorial.go_to_pose_goal()
+        input("=> Press `Enter` to move to a pose goal ...")
+        tutorial.go_to_pose_goal()
 
         input("============ Press `Enter` to plan Cartesian path z = -5cm")
         cartesian_plan, fraction = tutorial.plan_cartesian_path()
@@ -436,15 +493,19 @@ def main():
         # print("=> Press `Enter` to attach a Box to the UR5 robot ...")
         tutorial.attach_blue_box()
 
-        input("=> `Enter` to plan path2 ")
-        cartesian_plan2, fraction2 = tutorial.plan_cartesian_path2()
+        # ZWEITER CARTESINA PATH funktioniert nicht
+        # input("=> `Enter` to plan path2 ")
+        # cartesian_plan2, fraction2 = tutorial.plan_cartesian_path2()
 
-        # input("=> Press `Enter` to display a saved trajectory  plan2...")
-        tutorial.display_trajectory(cartesian_plan2)
+        # # input("=> Press `Enter` to display a saved trajectory  plan2...")
+        # tutorial.display_trajectory(cartesian_plan2)
 
-        print(cartesian_plan2)
-        input("=> Press `Enter` to execute plan2...")
-        tutorial.execute_plan(cartesian_plan2)
+        # print(cartesian_plan2)
+        # input("=> Press `Enter` to execute plan2...")
+        # tutorial.execute_plan(cartesian_plan2)
+
+        input("=> Press `Enter` to move to a pose goal 2")
+        tutorial.go_to_pose_goal2()
 
         input("=>Press `Enter` to open gripper an detach the blue box")
         tutorial.move_gripper(0)  # Gripper open
