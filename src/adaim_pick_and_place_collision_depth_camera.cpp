@@ -44,11 +44,11 @@ int main(int argc, char** argv)
     collision_object.header.frame_id = move_group_interface_arm.getPlanningFrame();
     collision_object.id = "blue_box";
 
-    // Reste aufräumen
-    ROS_INFO_NAMED("tutorial", "Remove the object from the world");
-    std::vector<std::string> object_ids;
-    object_ids.push_back(collision_object.id);
-    planning_scene_interface.removeCollisionObjects(object_ids);
+    // // Reste aufräumen
+    // ROS_INFO_NAMED("tutorial", "Remove the object from the world");
+    // std::vector<std::string> object_ids;
+    // object_ids.push_back(collision_object.id);
+    // planning_scene_interface.removeCollisionObjects(object_ids);
 
     shape_msgs::SolidPrimitive primitive;
     primitive.type = primitive.BOX;
@@ -98,11 +98,12 @@ int main(int argc, char** argv)
     moveit::planning_interface::MoveGroupInterface::Plan my_plan;
     
     // 1. Move to home position
-    move_group_interface_arm.setJointValueTarget(move_group_interface_arm.getNamedTargetValues("home"));
+    move_group_interface_arm.setJointValueTarget(move_group_interface_arm.getNamedTargetValues("above_blue_box"));
+    // ==> definiert im  File  ur5.srdf
     
     bool success = (move_group_interface_arm.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
 
-    ROS_INFO_NAMED("tutorial", "Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
+    ROS_INFO_NAMED("tutorial", "Visualizing plan 1 (home) %s", success ? "" : "FAILED");
 
     move_group_interface_arm.move();
 
@@ -120,7 +121,7 @@ int main(int argc, char** argv)
 
     success = (move_group_interface_arm.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
 
-    ROS_INFO_NAMED("tutorial", "Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
+    ROS_INFO_NAMED("tutorial", "Visualizing plan 2 (pose goal above blue box) %s", success ? "" : "FAILED");
 
     move_group_interface_arm.move();
 
@@ -132,25 +133,39 @@ int main(int argc, char** argv)
 
     success = (move_group_interface_gripper.plan(my_plan_gripper) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
 
-    ROS_INFO_NAMED("tutorial", "Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
+    ROS_INFO_NAMED("tutorial", "Visualizing plan 3 (open Gripper) %s", success ? "" : "FAILED");
 
     move_group_interface_gripper.move();
 
     // 4. Move the TCP close to the object
-    /* Variante 1: schiebt oft die Box weg */
-    target_pose1.position.z = target_pose1.position.z - 0.4;
-    move_group_interface_arm.setPoseTarget(target_pose1);
-    success = (move_group_interface_arm.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
-    ROS_INFO_NAMED("tutorial", "Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
+    // /* Variante 1: schiebt oft die Box weg */
+    // target_pose1.position.z = target_pose1.position.z - 0.4;
+    // move_group_interface_arm.setPoseTarget(target_pose1);
+
+    // success = (move_group_interface_arm.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    // ROS_INFO_NAMED("tutorial", "Visualizing plan 4 (TCP close to Object) %s", success ? "" : "FAILED");
     move_group_interface_arm.move();
     
+    // 4. besser?
+    // 4. Move the TCP close to the object
+    current_pose = move_group_interface_arm.getCurrentPose("ee_link");
+    target_pose1.orientation = current_pose.pose.orientation;
+    target_pose1.position = current_pose.pose.position;
+    target_pose1.position.z -= 0.33;  // 33cm tiefer
+    // !!! Bei 34cm Error:  ur5_arm/ur5_arm: Unable to sample any valid states for goal tree
+    target_pose1.position.y -= 0.15;  // 15cm weiter hinten
+    move_group_interface_arm.setPoseTarget(target_pose1);
+
+    success = (move_group_interface_arm.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    ROS_INFO_NAMED("tutorial", "Visualizing plan 4 (TCP close to Object) %s", success ? "" : "FAILED");
+    move_group_interface_arm.move();
 
     // 5. Close the  gripper
     move_group_interface_gripper.setJointValueTarget(move_group_interface_gripper.getNamedTargetValues("closed"));
 
     success = (move_group_interface_gripper.plan(my_plan_gripper) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
 
-    ROS_INFO_NAMED("tutorial", "Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
+    ROS_INFO_NAMED("tutorial", "Visualizing plan 5 (close gripper) %s", success ? "" : "FAILED");
 
     move_group_interface_gripper.move();
 
@@ -169,7 +184,7 @@ int main(int argc, char** argv)
 
     success = (move_group_interface_arm.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
 
-    ROS_INFO_NAMED("tutorial", "Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
+    ROS_INFO_NAMED("tutorial", "Visualizing plan 6 (pose goal above plate) %s", success ? "" : "FAILED");
 
     move_group_interface_arm.move();
 
@@ -179,7 +194,7 @@ int main(int argc, char** argv)
 
     success = (move_group_interface_arm.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
 
-    ROS_INFO_NAMED("tutorial", "Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
+    ROS_INFO_NAMED("tutorial", "Visualizing plan 7 (pose goal plate) %s", success ? "" : "FAILED");
 
     move_group_interface_arm.move();
 
@@ -188,7 +203,7 @@ int main(int argc, char** argv)
 
     success = (move_group_interface_gripper.plan(my_plan_gripper) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
 
-    ROS_INFO_NAMED("tutorial", "Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
+    ROS_INFO_NAMED("tutorial", "Visualizing plan 8 (open gripper) %s", success ? "" : "FAILED");
 
     move_group_interface_gripper.move();
 
