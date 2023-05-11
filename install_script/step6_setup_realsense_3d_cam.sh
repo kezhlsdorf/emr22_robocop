@@ -4,16 +4,17 @@
 # auf einem Rechner mit Ubuntu 20.04 Focal Fossa  
 # OJ fuer robotik.bocholt@w-hs.de
 # SS2022
-# geaendert am 9.6.2022
+# geaendert am 9.5.2023
+# Wichitg: Nutze Bracnch ros1-legacy
 #------------------------------------------------------------------
 # funktioniert nicht aber gute Erklärung =>
 # https://linuxtut.com/en/be1eb78015828d43f9fb/
 #------------------------------------------------------------------
 #  usage:
 # $ roslaunch realsense2_camera rs_camera.launch
-# $ roslaunch emr22 find_2d_object_realsense_world
+# $ roslaunch emr22 find_object_2d_realsense_world.launch
 # ggf.   rviz
-# rosrun tf tf_echo world object_14
+# rosrun tf tf_echo world object_8
 #------------------------------------------------------------------
 
 echo -e "\033[34m ----- robotik.bocholt@w-hs.de -- SS22 - Intel Realsense installieren .. ----- \033[0m "
@@ -27,7 +28,7 @@ sudo apt-get install librealsense2-utils
 sudo apt-get install librealsense2-dev
 sudo apt-get install librealsense2-db
 
-sudo apt-get install ros-noetic-realsense2-camera -b ros1-legacy
+sudo apt-get install ros-noetic-realsense2-camera
 sudo apt-get install ros-noetic-object-recognition-msgs
 sudo apt-get install ros-noetic-libuvc-camera
 sudo apt-get install ros-noetic-octomap-msgs
@@ -40,7 +41,8 @@ echo -e "\033[34m Intel Realsense SDK-Tool starten mit: $ realsense-viewer \033[
 
 cd ~/ws_moveit/src/
 # ROS-Wrapper
-git clone https://github.com/IntelRealSense/realsense-ros.git
+# SS23 Wichitg: Nutze Bracnch ros1-legacy
+git clone https://github.com/IntelRealSense/realsense-ros.git -b ros1-legacy
 git clone https://github.com/ros-planning/warehouse_ros.git
 git clone https://github.com/introlab/find-object.git
 
