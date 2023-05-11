@@ -1,0 +1,5 @@
+https://wiki.ros.org/camera_calibration/Tutorials/MonocularCalibration
+
+Für Realsense in EMR22
+
+$ rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.108 --no-service-check image:=/camera/color/image_raw  camera:=/camera/color
