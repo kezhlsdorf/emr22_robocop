@@ -22,8 +22,8 @@ if __name__ == '__main__':
         br.sendTransform((1.65, -0.0205, 0.09),
                          (tf.transformations.quaternion_from_euler(-np.pi + 15.0*np.pi/180, np.pi * (0.575), 13.8*np.pi/180, 'sxyz')),  # rpy # (1.0, -0.90, 0.0) (-3.14 , 1.3, 0.0)
                          rospy.Time.now(),
-                         "world",
-                         "camera_link")
+                         "camera_link",
+                         "world")
         print("sending transform /world => /camera_link")
 
         br.sendTransform((0, 0, 0),
