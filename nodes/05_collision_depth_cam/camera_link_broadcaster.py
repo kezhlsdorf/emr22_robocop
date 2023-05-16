@@ -10,7 +10,7 @@ import numpy as np  # Scientific computing library for Python
 if __name__ == '__main__':
     rospy.init_node('fixed_tf_broadcaster')
     br = tf.TransformBroadcaster()
-    rate = rospy.Rate(10.0)
+    rate = rospy.Rate(1.0)
     while not rospy.is_shutdown():
         
         # Hier Abstand camera_link zum world_frame eintragen
@@ -22,8 +22,8 @@ if __name__ == '__main__':
         br.sendTransform((1.65, -0.0205, 0.09),
                          (tf.transformations.quaternion_from_euler(-np.pi + 15.0*np.pi/180, np.pi * (0.575), 13.8*np.pi/180, 'sxyz')),  # rpy # (1.0, -0.90, 0.0) (-3.14 , 1.3, 0.0)
                          rospy.Time.now(),
-                         "camera_link",
-                         "world")
+                         "world",
+                         "camera_link")
         print("sending transform /world => /camera_link")
 
         br.sendTransform((0, 0, 0),
