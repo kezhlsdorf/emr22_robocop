@@ -47,12 +47,15 @@ print(ids, corners)
 
 # Getting Distance
 # https://stackoverflow.com/questions/68019526/how-can-i-get-the-distance-from-my-camera-to-an-opencv-aruco-marker
+# https://mecaruco2.readthedocs.io/en/latest/notebooks_rst/Aruco/Projet+calibration-Paul.html
 markerSizeInCM = 0.2  # m
 imsize = [640, 480]  # Bildeigenschaften
 print(imsize)
+# Init  3x3 floating-point camera matrix
 cameraMatrixInit = np.array([[2000.,    0., imsize[0]/2.],
                              [   0., 2000., imsize[1]/2.],
                              [   0.,    0.,           1.]])
+# vector of distortion (Verzerrung) coefficients
 distortion_coefficients = 0
 rvec, tvec, _ = cv2.aruco.estimatePoseSingleMarkers(corners, markerSizeInCM,
                                                     cameraMatrixInit,
