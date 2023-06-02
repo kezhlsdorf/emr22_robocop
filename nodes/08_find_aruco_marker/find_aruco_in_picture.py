@@ -10,7 +10,7 @@
 #
 
 # Python libs
-# import numpy as np
+import numpy as np
 
 # OpenCV
 import cv2
@@ -44,3 +44,15 @@ arucoParams = cv2.aruco.DetectorParameters_create()
                                                    arucoDict,
                                                    parameters=arucoParams)
 print(ids, corners)
+
+# Getting Distance
+# https://stackoverflow.com/questions/68019526/how-can-i-get-the-distance-from-my-camera-to-an-opencv-aruco-marker
+markerSizeInCM = 0.2  # m
+imsize = [640 , 480]  # Bildeigenschaften
+print(imsize)
+cameraMatrixInit = np.array([[2000.,    0., imsize[0]/2.],
+                             [   0., 2000., imsize[1]/2.],
+                             [   0.,    0.,           1.]])
+dist = 0
+rvec , tvec, _ = cv2.aruco.estimatePoseSingleMarkers(corners, markerSizeInCM, cameraMatrixInit, dist)
+
