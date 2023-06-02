@@ -48,11 +48,14 @@ print(ids, corners)
 # Getting Distance
 # https://stackoverflow.com/questions/68019526/how-can-i-get-the-distance-from-my-camera-to-an-opencv-aruco-marker
 markerSizeInCM = 0.2  # m
-imsize = [640 , 480]  # Bildeigenschaften
+imsize = [640, 480]  # Bildeigenschaften
 print(imsize)
 cameraMatrixInit = np.array([[2000.,    0., imsize[0]/2.],
                              [   0., 2000., imsize[1]/2.],
                              [   0.,    0.,           1.]])
-dist = 0
-rvec , tvec, _ = cv2.aruco.estimatePoseSingleMarkers(corners, markerSizeInCM, cameraMatrixInit, dist)
-
+distortion_coefficients = 0
+rvec, tvec, _ = cv2.aruco.estimatePoseSingleMarkers(corners, markerSizeInCM,
+                                                    cameraMatrixInit,
+                                                    distortion_coefficients)
+print("rvec", rvec)  # Output vector of rotation vectors (see Rodrigues ) estimated for each board view
+print("tvec", tvec)  # Output vector of translation vectors estimated for each pattern view.
