@@ -1,5 +1,6 @@
 # https://github.com/jonathanfoster/ball-tracking
 # Farben finden
+#  pip install imutils
 # $ python color_picker.py -i left0000.jpg
 import argparse
 import cv2

@@ -26,7 +26,7 @@ blueUpper = (147, 163, 244)
 
 # Bild aus Datei lesen
 # '~' funktioniert hier nicht
-frame = cv2.imread('/home/oj/Bilder/left0000.jpg')
+frame = cv2.imread('/home/oj/ws_moveit/src/emr22/nodes/06_openCV_gazebo_realSenseCam/left0000.jpg')
 cv2.imshow("Kinect Bild", frame)
 #cv2.waitKey(0)
 
@@ -36,14 +36,14 @@ mask = cv2.inRange(hsv, blueLower, blueUpper)
 mask = cv2.erode(mask, None, iterations=2)
 mask = cv2.dilate(mask, None, iterations=2)
 cv2.imshow("Mask", mask)
-#cv2.waitKey(0)
+# cv2.waitKey(0)
 
 # Konturen finden
 cnts = cv2.findContours(mask.copy(),
                         cv2.RETR_EXTERNAL,
                         cv2.CHAIN_APPROX_SIMPLE)[-2]
 center = None
-# print("gefundene Konturen", cnts)
+print("gefundene Konturen", cnts)
 
 if len(cnts) > 0:
     c = max(cnts, key=cv2.contourArea)
