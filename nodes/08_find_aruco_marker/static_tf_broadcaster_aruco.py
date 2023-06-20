@@ -31,11 +31,12 @@ if __name__ == '__main__':
         tr.header.frame_id = "marker_id5"      
         tr.child_frame_id = "world"      
        
-        tr.transform.translation.x = 0.45
-        tr.transform.translation.y = 0.45
+        # Mit Massband gemessen
+        tr.transform.translation.x = 0.0
+        tr.transform.translation.y = -0.65
         tr.transform.translation.z = 0.0
 
-        quat = tf.transformations.quaternion_from_euler(0.0, 0.0, 2.25)
+        quat = tf.transformations.quaternion_from_euler(0.0, 0.0, 0.0)
         tr.transform.rotation.x = quat[0]
         tr.transform.rotation.y = quat[1]
         tr.transform.rotation.z = quat[2]
