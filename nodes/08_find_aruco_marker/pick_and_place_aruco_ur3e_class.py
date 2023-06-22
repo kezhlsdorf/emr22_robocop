@@ -74,16 +74,16 @@ class Ur3_aruco:
         # if lst.frameExists("world") and lst.frameExists("marker_id9"):
         # Sicherstellen, das die Frames empfangen werden
         while not lst.frameExists("world"):
-            print("Kein world frame")
+            print("Waiting for world frame")
         while not lst.frameExists("marker_id9"):
-            print("Kein marker_id9 frame")
+            print("Waiting for marker_id9 frame")
         
         (trans, rot) = lst.lookupTransform('world', 'marker_id9', rospy.Time(0))    
                  
         pose_goal = self.group.get_current_pose()  # Instanzierung
         # no worx pose_goal.pose.position = trans
         # => Daten einzeln übergeben
-        print("translation is ", trans)
+        print("translation world => marker_id9 is ", trans)
         xt = round(trans[0], 2)
         pose_goal.pose.position.x = xt 
         yt = round(trans[1], 2)
@@ -121,13 +121,14 @@ class Ur3_aruco:
         self.group.clear_pose_targets()
          
     def goto_goal1(self):
-        # Anfahren der einer gültigen Positiom
+        # Anfahren der einer gültigen Position
         print("===  Go to Goal 1 ==")
         pose_goal = self.group.get_current_pose()
 
         pose_goal.pose.position.x = 0.04
         pose_goal.pose.position.y = 0.33
         pose_goal.pose.position.z = 0.5
+        # Orientation muss  auch angegeben werden
         pose_goal.pose.orientation.x = 0
         pose_goal.pose.orientation.y = 0.70
         pose_goal.pose.orientation.z = 0
@@ -168,8 +169,9 @@ def main():
     ua = Ur3_aruco()
     ua.goto_stored_position_home("home")
     ua.goto_goal1()
+    print("Going to Aruco Item with Marker ID9")
     ua.get_aruco_tf_and_go()
-    input("Back to Home ? => Enter")
+    input("Robot Back to Home ? => Enter")
     ua.goto_stored_position_home("home")
 
 
