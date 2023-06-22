@@ -16,7 +16,7 @@ import sys
 import rospy
 import moveit_commander
 import moveit_msgs.msg
-# import geometry_msgs.msg
+import geometry_msgs.msg
 # from math import pi
 # import numpy as np  # für deg2rad
 import tf
@@ -45,7 +45,8 @@ cur_pose = group.get_current_pose()
 print("\n Current Pose is: ", cur_pose)
 
 lst = tf.TransformListener()
-pose_goal = group.get_current_pose()
+# pose_goal = group.get_current_pose()
+pose_goal = geometry_msgs.msg.Pose()
 
 rate = rospy.Rate(10.0)
 
