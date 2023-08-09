@@ -97,6 +97,7 @@ add_executable(adaim_pick_place_collision  src/adaim_pick_and_place_collision.cp
 add_executable(adaim_pick_place_coll_depth_camera  src/adaim_pick_and_place_collision_depth_camera.cpp )
 add_executable(adaim_pick_place_coll_depth_cam_cartesian  src/adaim_pick_and_place_collision_depth_camera_cartesian.cpp )
 add_executable(hello_ros_param    src/hello_ros_param.cpp )
+add_executable(robot_go_to_pose_goal src/robot_go_to_pose_goal.cpp )
 
 
 #add_executable(hello_qt    src/sw01_qt_hello.cpp )
@@ -110,10 +111,18 @@ target_link_libraries(adaim_pick_place_collision ${catkin_LIBRARIES} )
 target_link_libraries(adaim_pick_place_coll_depth_camera ${catkin_LIBRARIES} )
 target_link_libraries(adaim_pick_place_coll_depth_cam_cartesian ${catkin_LIBRARIES} )
 target_link_libraries(hello_ros_param ${catkin_LIBRARIES} )
+target_link_libraries(robot_go_to_pose_goal ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
+
+
 # 
 #############
 ## Install ##
 #############
+
+# ??? aus https://github.com/ros-planning/moveit_tutorials/blob/master/doc/motion_planning_api/CMakeLists.txt
+# install(TARGETS robot_go_to_pose_goal DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+# install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
 
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html

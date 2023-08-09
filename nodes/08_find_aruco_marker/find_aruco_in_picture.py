@@ -5,8 +5,9 @@
 # Einen ArUco Marker in einem Bild detektieren
 # Vgl. https://pyimagesearch.com/2020/12/21/detecting-aruco-markers-with-opencv-and-python/
 #
-# usage: not done yet
-# $1
+#  ACHTUNG ACHTUNG ACHTUNG
+# führt zu Timing Problemen beim auswerten der Transformationen !!
+# besser static_tf_broadcaster_aruco.py nutzen 
 #
 
 # Python libs
