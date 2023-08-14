@@ -16,9 +16,15 @@ echo -e "\033[34m ----- RoboCop -- MoveIt Task Constructor installieren ----- \0
 
 cd ~/ws_moveit/src
 
-git clone https://github.com/ros-planning/moveit_task_constructor.git
+git clone https://github.com/kezhlsdorf/moveit_task_constructor_emr.git
+
+echo -e "\033[34m ----- RoboCop -- install missing packages  ----- \033[0m"
 
 sudo rosdep install --from-paths . --ignore-src --rosdistro $ROS_DISTRO
+
+echo -e "\033[34m ----- RoboCop -- Rename Folder MoveIt Task Constructor  ----- \033[0m"
+
+mv ~/ws_moveit/src/moveit_task_constructor_emr ~/ws_moveit/src/moveit_task_constructor
 
 cd ~/ws_moveit
 
